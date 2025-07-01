@@ -1,0 +1,92 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{"Mini validador y limpiador de archivos CSV automatizado"}
+\author{Michelle Alanis Navarro Fierro}
+\date{Junio 2025}
+
+\begin{document}
+
+\maketitle
+
+\section*{Objetivo del proyecto}
+Diseñar y desarrollar una herramienta en Python que, integrada con Bash y ejecutable dentro de un contenedor Docker, permita validar, limpiar y estandarizar archivos CSV con datos tabulares, enfocándose en errores comunes como campos vacíos, valores duplicados o datos mal formateados, para entregar un archivo limpio y un reporte de validación, dentro de un plazo de 1 semana.
+
+El fin es crear una herramienta simple que revise archivos CSV y detecte errores como:
+
+\begin{itemize}
+    \item Campos vacíos.
+    \item Tipos de datos incorrectos (por ejemplo, texto donde debe haber un número).
+    \item Duplicados.
+    \item Filas incompletas.
+\end{itemize}
+
+El programa generará un nuevo archivo limpio (\texttt{data\_clean.csv}) y un reporte (\texttt{reporte\_validacion.txt}).
+
+\section*{Justificación del trabajo}
+Este proyecto surge por la necesidad constante en áreas como ciencia de datos, sistemas y desarrollo de software de tratar con datos "sucios" o mal estructurados, especialmente en formatos como CSV. Muchas tareas de limpieza y validación se hacen manualmente o con herramientas costosas, por lo que una herramienta simple y portátil puede ahorrar tiempo y errores.
+
+Además, este proyecto refuerza habilidades técnicas prácticas:
+
+\begin{itemize}
+    \item Uso de expresiones regulares y manejo de archivos en Python.
+    \item Automatización de flujos con Bash.
+    \item Contenerización para facilitar la portabilidad y despliegue.
+    
+\end{itemize}
+
+\section*{¿Para quién es el programa?}
+
+Este proyecto va dirigido para estudiantes, analistas de datos, investigadores y desarrolladores que reciben datos en archivos CSV y necesitan limpiarlos rápidamente antes de analizarlos o cargarlos en otro sistema.
+
+\section*{Desiciones que necesita tomar el programa para funcionar}
+
+\begin{itemize}
+    \item Detectar columnas esperadas (si se proporciona un esquema).
+    \item Validar tipo de dato en cada columna.
+    \item Eliminar filas vacías o nulas si así se configura.
+    \item Reportar o eliminar duplicados.
+    \item Decidir si continuar o detenerse si hay errores graves.
+\end{itemize}
+
+\section*{Formas de romper el programa y cómo prevenirlo}
+\subsection*{Riesgos:}
+\begin{itemize}
+    \item Que el archivo CSV esté mal formateado (delimitadores inconsistentes).
+    \item Que tenga codificación incompatible (ej. UTF-16).
+    \item Archivos extremadamente grandes.
+\end{itemize}
+
+\subsection*{Soluciones:}
+\begin{itemize}
+    \item Validar delimitadores y codificación al inicio.
+    \item Usar try-except para manejar errores de lectura.
+    \item Procesar archivos por lotes o en streaming si son grandes.
+    \item Incluir validaciones de entrada (nombre del archivo, formato, etc.).
+\end{itemize}
+
+\section*{Prevención de sesgos o discriminación}
+Aunque el programa no maneja contenido sensible por sí mismo, se pueden tomar medidas como:
+
+\begin{itemize}
+    \item Evitar suposiciones de género, raza o cultura al procesar nombres de columnas.
+    \item No borrar datos arbitrariamente si no están claramente vacíos.
+    \item Permitir configuración flexible del esquema (por ejemplo, no asumir que una columna debe llamarse “Nombre” o “Edad”).
+    \item Además, se puede incluir una advertencia en la documentación sobre cómo validar éticamente conjuntos de datos sensibles, especialmente si contienen información personal.
+\end{itemize}
+
+\section*{Ejemplo de ejecución}
+\begin{verbatim}
+$docker build -t csv-cleaner .
+
+$docker run -v $(pwd)/data:/app/data -v $(pwd)/cleaned_data:
+/app/cleaned_data -v $(pwd)/report:/app/report csv-cleaner
+\end{verbatim}
+
+\end{document}
